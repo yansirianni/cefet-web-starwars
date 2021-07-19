@@ -7,6 +7,7 @@
 import { play } from './music.js';
 import { numeroParaRomano, romanoParaNumero } from './roman.js';
 import { restartAnimation } from './restart-animation.js';
+import { friendlyFetch } from './friendly-fetch.js';
 
 const API_ENDPOINT = 'https://swapi.dev/api'
 
@@ -23,8 +24,7 @@ play(musicConfiguration, document.body);
 
 //Exercicio 2
 
-const response = await fetch(`${API_ENDPOINT}/films`);
-const films = await response.json();
+const films = await friendlyFetch(`${API_ENDPOINT}/films`);
 
 const filmsListEl = document.querySelector('#filmes ul');
 
