@@ -5,7 +5,8 @@
 //  - Quando um filme for clicado, exibir sua introdução
 
 import { play } from './music.js';
-import { numeroParaRomano } from './roman.js';
+import { numeroParaRomano, romanoParaNumero } from './roman.js';
+import { restartAnimation } from './restart-animation.js';
 
 const API_ENDPOINT = 'https://swapi.dev/api'
 
@@ -29,6 +30,31 @@ const filmsListEl = document.querySelector('#filmes ul');
 
 filmsListEl.innerHTML = '';
 
-for (const film of films.results){
+for (let film of films.results){
     filmsListEl.innerHTML += `<li>Episode ${numeroParaRomano(film.episode_id).padEnd(3, ' ')} - ${film.title}</li>`;
 }
+
+//Exercicio 3
+
+const filmsList = document.querySelectorAll('#filmes ul li');
+
+function atualizaIntro(e){
+        
+    const episodeRoman = e.currentTarget.innerHTML.split(' ')[1];
+    const episode = romanoParaNumero(episodeRoman);        
+
+    const film = films.results.find(f => f.episode_id == episode);
+            
+    const introducaoEl = document.querySelector('pre.introducao');
+
+    introducaoEl.innerHTML = `Episode ${episodeRoman} 
+                              ${film.title} 
+
+                              ${film.opening_crawl}`;
+    
+    restartAnimation(introducaoEl);
+};
+
+filmsList.forEach(filmEl => {
+    filmEl.addEventListener('click', e => atualizaIntro(e)); 
+});
