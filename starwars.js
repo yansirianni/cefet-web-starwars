@@ -30,6 +30,10 @@ const filmsListEl = document.querySelector('#filmes ul');
 
 filmsListEl.innerHTML = '';
 
+films.results.sort((a, b) => {
+    return a.episode_id - b.episode_id;
+});
+
 for (let film of films.results){
     filmsListEl.innerHTML += `<li>Episode ${numeroParaRomano(film.episode_id).padEnd(3, ' ')} - ${film.title}</li>`;
 }
